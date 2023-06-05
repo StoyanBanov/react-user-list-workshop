@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { Pagination } from './components/pagination/Pagination';
 import { Search } from './components/search/Search';
 import { UserList } from './components/user-list/UserList';
+import { getAllUsers } from './data/services/userService';
 
 function App() {
     const [users, setUsers] = useState([])
     useEffect(() => {
-        fetch('http://localhost:3005/api/users')
-            .then(response => response.json())
+        getAllUsers()
             .then(data => {
                 setUsers(data.users)
             })
