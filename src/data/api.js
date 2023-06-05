@@ -9,9 +9,8 @@ async function request(method, url, body) {
         options.headers['Content-Type'] = 'application/json'
         options.body = JSON.stringify(body)
     }
-
     const response = await fetch(host + url, options)
-    if (!response.ok) throw new Error('response error')
+    if (!response.ok) throw new Error((await response.json()).message)
     try {
         return await response.json()
     } catch (error) {

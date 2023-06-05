@@ -1,4 +1,10 @@
-export const USerDetails = ({ user }) => {
+import { useEffect } from "react"
+
+export const USerDetails = ({ user, parentHtmlHandler }) => {
+    useEffect(() => {
+        parentHtmlHandler('User Details', 'detail')
+    }, [])
+
     return <div className="content">
         <div className="image-container">
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt=""

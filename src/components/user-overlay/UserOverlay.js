@@ -1,20 +1,23 @@
 import { useState } from 'react'
 import { actions } from './userOverlayConsts'
 import { USerDetails } from './UserDetails'
+import { UserEdit } from './UserEdit'
+import { UserAdd } from './UserAdd'
+import { UserDelete } from './UserDelete'
 
-export const UserOverlay = ({ action, user, handleCloseOverlay }) => {
-    const [title, setTitle] = useState()
+export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) => {
+    const [htmlFromChild, setHtmlFromChild] = useState(null)
 
-    function setTitleFromChild(title) {
-        setTitle(title)
+    function setHtml(title, containerClassName) {
+        setHtmlFromChild({ title, containerClassName })
     }
 
     return <div div className="overlay">
         <div className="backdrop"></div>
         <div className="modal">
-            <div className="detail-container">
+            <div className={`${htmlFromChild?.containerClassName}-container`}>
                 <header className="headers">
-                    <h2>{title}</h2>
+                    <h2>{htmlFromChild?.title}</h2>
                     <button onClick={handleCloseOverlay} className="btn close">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                             className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -24,9 +27,10 @@ export const UserOverlay = ({ action, user, handleCloseOverlay }) => {
                         </svg>
                     </button>
                 </header>
-                {action === actions.details && <USerDetails titleHandler={setTitleFromChild} user={user} />}
-                {action === actions.edit && <USerDetails titleHandler={setTitleFromChild} user={user} />}
-                {action === actions.delete && <USerDetails titleHandler={setTitleFromChild} user={user} />}
+                {action === actions.details && <USerDetails parentHtmlHandler={setHtml} user={user} />}
+                {action === actions.edit && <UserEdit parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.delete && <UserDelete parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.add && <UserAdd parentHtmlHandler={setHtml} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
             </div>
         </div>
     </div>
