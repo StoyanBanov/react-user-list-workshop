@@ -20,10 +20,13 @@ function App() {
     function updateUsers(user, userId) {
         const currentUsers = [...users]
 
-        if (user) currentUsers.unshift(user)
-        else if (userId) currentUsers.splice(users.findIndex(u => u._id === userId), 1)
+        if (userId) {
+            const userIndex = currentUsers.findIndex(u => u._id === userId)
+            if (user) currentUsers[userIndex] = user
+            else currentUsers.splice(userIndex, 1)
+        } else currentUsers.unshift(user)
 
-        setUsers([...currentUsers])
+        setUsers(currentUsers)
     }
 
     const [userOverlay, setUserOverlay] = useState(null)
