@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { actions } from './userOverlayConsts'
 import { USerDetails } from './UserDetails'
-import { UserEdit } from './UserEdit'
-import { UserAdd } from './UserAdd'
 import { UserDelete } from './UserDelete'
+import { UserForm } from './UserForm'
 
 export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) => {
     const [htmlFromChild, setHtmlFromChild] = useState(null)
@@ -28,9 +27,9 @@ export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) =
                     </button>
                 </header>
                 {action === actions.details && <USerDetails parentHtmlHandler={setHtml} user={user} />}
-                {action === actions.edit && <UserEdit parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.edit && <UserForm parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} action={actions.edit} />}
                 {action === actions.delete && <UserDelete parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
-                {action === actions.add && <UserAdd parentHtmlHandler={setHtml} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.add && <UserForm parentHtmlHandler={setHtml} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
             </div>
         </div>
     </div>
