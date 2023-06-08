@@ -6,6 +6,10 @@ export async function getAllUsers() {
     return api.get(endpoint)
 }
 
+export async function getUsersPerPage(page, limit = 5) {
+    return api.get(`${endpoint}?page=${page}&limit=${limit}`)
+}
+
 export async function getUserById(id) {
     return api.get(`${endpoint}/${id}`)
 }

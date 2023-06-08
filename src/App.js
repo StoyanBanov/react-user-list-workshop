@@ -5,13 +5,20 @@ import { useEffect, useState } from 'react'
 import { Pagination } from './components/pagination/Pagination';
 import { Search } from './components/search/Search';
 import { UserList } from './components/user-list/UserList';
-import { getAllUsers, getUserById } from './data/services/userService';
+import { getAllUsers, getUserById, getUsersPerPage } from './data/services/userService';
 import { UserOverlay } from './components/user-overlay/UserOverlay';
 
 function App() {
     const [users, setUsers] = useState([])
+
+    const [count, setCount] = useState(0)
+
     useEffect(() => {
         getAllUsers()
+            .then(data => {
+                setCount(Math.ceil(data.count / 5))
+            })
+        getUsersPerPage(1, 5)
             .then(data => {
                 setUsers(data.users)
             })
@@ -62,7 +69,7 @@ function App() {
 
                     <button onClick={() => handleUserBtn('add')} className="btn-add btn">Add new user</button>
 
-                    <Pagination />
+                    <Pagination count={count} />
                 </section>
             </main>
 

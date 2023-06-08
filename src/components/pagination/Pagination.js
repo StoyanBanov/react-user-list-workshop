@@ -1,4 +1,4 @@
-export const Pagination = ({ pagesCount }) => {
+export const Pagination = ({ count }) => {
     const currentPage = 1
 
     return (
@@ -12,9 +12,9 @@ export const Pagination = ({ pagesCount }) => {
                     <option defaultValue="20">20</option>
                 </select>
             </div>
-            <p className="pages">{currentPage} - {pagesCount} of {pagesCount}</p>
+            <p className="pages">{currentPage} - {count} of {count}</p>
             <div className="actions">
-                <button className="btn" title="First Page">
+                <button className="btn" title="First Page" disabled={currentPage === 1}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-left"
                         className="svg-inline--fa fa-angles-left" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">
@@ -24,7 +24,7 @@ export const Pagination = ({ pagesCount }) => {
                     </svg>
                 </button>
 
-                <button className="btn" title="Previous Page">
+                <button className="btn" title="Previous Page" disabled={currentPage === 1}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left"
                         className="svg-inline--fa fa-angle-left" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512">
