@@ -3,7 +3,7 @@ import { useEffect } from "react"
 export const USerDetails = ({ user, parentHtmlHandler }) => {
     useEffect(() => {
         parentHtmlHandler('User Details', 'detail')
-    }, [])
+    }, [parentHtmlHandler])
 
     return <div className="content">
         <div className="image-container">
