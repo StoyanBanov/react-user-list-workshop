@@ -11,18 +11,23 @@ import { UserOverlay } from './components/user-overlay/UserOverlay';
 function App() {
     const [users, setUsers] = useState([])
 
-    const [count, setCount] = useState(0)
+    const [pagesCount, setPagesCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(5)
 
     useEffect(() => {
         getAllUsers()
             .then(data => {
-                setCount(Math.ceil(data.count / 5))
+                setPagesCount(Math.ceil(data.count / itemsPerPage))
             })
-        getUsersPerPage(1, 5)
+    }, [itemsPerPage])
+
+    useEffect(() => {
+        getUsersPerPage(currentPage, itemsPerPage)
             .then(data => {
                 setUsers(data.users)
             })
-    }, [])
+    }, [currentPage, itemsPerPage])
 
     function updateUsers(user, userId) {
         const currentUsers = [...users]
@@ -69,7 +74,7 @@ function App() {
 
                     <button onClick={() => handleUserBtn('add')} className="btn-add btn">Add new user</button>
 
-                    <Pagination count={count} />
+                    <Pagination count={pagesCount} setCurrentPage={setCurrentPage} currentPage={currentPage} setItemsPerPage={setItemsPerPage} />
                 </section>
             </main>
 

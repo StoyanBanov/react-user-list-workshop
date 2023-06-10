@@ -1,11 +1,32 @@
-export const Pagination = ({ count }) => {
-    const currentPage = 1
+export const Pagination = ({ count, setCurrentPage, currentPage, setItemsPerPage }) => {
+
+    function nextPageClickHandler(e) {
+        setCurrentPage(page => page + 1)
+    }
+
+    function prevPageClickHandler(e) {
+        setCurrentPage(page => page - 1)
+    }
+
+    function firstPageClickHandler(e) {
+        setCurrentPage(1)
+    }
+
+    function lastPageClickHandler(e) {
+        setCurrentPage(count)
+    }
+
+    function itemsPerPageHandler(e) {
+        setItemsPerPage(e.target.value)
+        setCurrentPage(1)
+    }
 
     return (
         <div div className="pagination position" >
             <div className="limits">
                 <span>Items per page:</span>
-                <select name="limit" className="limit" defaultValue="5">
+                <select onChange={itemsPerPageHandler} name="limit" className="limit" defaultValue={5}>
+                    <option defaultValue="2">2</option>
                     <option defaultValue="5">5</option>
                     <option defaultValue="10">10</option>
                     <option defaultValue="15">15</option>
@@ -14,7 +35,7 @@ export const Pagination = ({ count }) => {
             </div>
             <p className="pages">{currentPage} - {count} of {count}</p>
             <div className="actions">
-                <button className="btn" title="First Page" disabled={currentPage === 1}>
+                <button onClick={firstPageClickHandler} className="btn" title="First Page" disabled={currentPage === 1}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-left"
                         className="svg-inline--fa fa-angles-left" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">
@@ -24,7 +45,7 @@ export const Pagination = ({ count }) => {
                     </svg>
                 </button>
 
-                <button className="btn" title="Previous Page" disabled={currentPage === 1}>
+                <button onClick={prevPageClickHandler} className="btn" title="Previous Page" disabled={currentPage === 1}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left"
                         className="svg-inline--fa fa-angle-left" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512">
@@ -33,7 +54,7 @@ export const Pagination = ({ count }) => {
                         </path>
                     </svg>
                 </button>
-                <button className="btn" title="Next Page">
+                <button onClick={nextPageClickHandler} className="btn" title="Next Page" disabled={currentPage === count}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right"
                         className="svg-inline--fa fa-angle-right" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 256 512">
@@ -43,7 +64,7 @@ export const Pagination = ({ count }) => {
                     </svg>
                 </button>
 
-                <button className="btn" title="Last Page">
+                <button onClick={lastPageClickHandler} className="btn" title="Last Page" disabled={currentPage === count}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-right"
                         className="svg-inline--fa fa-angles-right" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">
