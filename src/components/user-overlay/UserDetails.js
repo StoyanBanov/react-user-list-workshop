@@ -2,8 +2,8 @@ import { useEffect } from "react"
 
 export const USerDetails = ({ user, parentHtmlHandler }) => {
     useEffect(() => {
-        parentHtmlHandler('User Details', 'detail')
-    }, [parentHtmlHandler])
+        parentHtmlHandler({ title: 'User Details', containerClassName: 'detail' })
+    }, [])
 
     return <div className="content">
         <div className="image-container">

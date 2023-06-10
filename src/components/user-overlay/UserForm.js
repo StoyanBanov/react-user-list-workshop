@@ -4,8 +4,9 @@ import { actions } from "./userOverlayConsts"
 
 export const UserForm = ({ parentHtmlHandler, handelClose, updateUsers, user, action }) => {
     useEffect(() => {
-        parentHtmlHandler('Add User', 'user')
-    }, [parentHtmlHandler])
+        parentHtmlHandler({ title: 'Add User', containerClassName: 'user' })
+    }, [])
+
 
     const isEditAction = action === actions.edit
 

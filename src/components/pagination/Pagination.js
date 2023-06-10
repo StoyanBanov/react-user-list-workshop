@@ -22,7 +22,7 @@ export const Pagination = ({ count, setCurrentPage, currentPage, setItemsPerPage
     }
 
     return (
-        <div div className="pagination position" >
+        <div className="pagination position" >
             <div className="limits">
                 <span>Items per page:</span>
                 <select onChange={itemsPerPageHandler} name="limit" className="limit" defaultValue={5}>

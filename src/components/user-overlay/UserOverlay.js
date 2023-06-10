@@ -7,10 +7,6 @@ import { UserForm } from './UserForm'
 export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) => {
     const [htmlFromChild, setHtmlFromChild] = useState(null)
 
-    function setHtml(title, containerClassName) {
-        setHtmlFromChild({ title, containerClassName })
-    }
-
     return <div div className="overlay">
         <div className="backdrop"></div>
         <div className="modal">
@@ -26,10 +22,10 @@ export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) =
                         </svg>
                     </button>
                 </header>
-                {action === actions.details && <USerDetails parentHtmlHandler={setHtml} user={user} />}
-                {action === actions.edit && <UserForm parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} action={actions.edit} />}
-                {action === actions.delete && <UserDelete parentHtmlHandler={setHtml} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
-                {action === actions.add && <UserForm parentHtmlHandler={setHtml} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.details && <USerDetails parentHtmlHandler={setHtmlFromChild} user={user} />}
+                {action === actions.edit && <UserForm parentHtmlHandler={setHtmlFromChild} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} action={actions.edit} />}
+                {action === actions.delete && <UserDelete parentHtmlHandler={setHtmlFromChild} user={user} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
+                {action === actions.add && <UserForm parentHtmlHandler={setHtmlFromChild} handelClose={handleCloseOverlay} updateUsers={updateUsers} />}
             </div>
         </div>
     </div>

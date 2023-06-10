@@ -20,7 +20,7 @@ function App() {
             .then(data => {
                 setPagesCount(Math.ceil(data.count / itemsPerPage))
             })
-    }, [itemsPerPage])
+    }, [itemsPerPage, users])
 
     useEffect(() => {
         getUsersPerPage(currentPage, itemsPerPage)
@@ -34,11 +34,24 @@ function App() {
 
         if (userId) {
             const userIndex = currentUsers.findIndex(u => u._id === userId)
-            if (user) currentUsers[userIndex] = user
-            else currentUsers.splice(userIndex, 1)
-        } else currentUsers.unshift(user)
-
-        setUsers(currentUsers)
+            if (user) {
+                currentUsers[userIndex] = user
+                setUsers(currentUsers)
+            } else {
+                currentUsers.splice(userIndex, 1)
+                if (currentUsers.length < itemsPerPage) {
+                    getUsersPerPage(currentPage, itemsPerPage)
+                        .then(data => {
+                            currentUsers.push(data.users[0])
+                            setUsers(data.users)
+                        })
+                }
+            }
+        } else {
+            currentUsers.unshift(user)
+            if (currentUsers.length > itemsPerPage) currentUsers.pop()
+            setUsers(currentUsers)
+        }
     }
 
     const [userOverlay, setUserOverlay] = useState(null)

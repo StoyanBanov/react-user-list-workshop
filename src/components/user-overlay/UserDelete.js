@@ -3,8 +3,8 @@ import { deleteUser } from "../../data/services/userService"
 
 export const UserDelete = ({ user, handelClose, updateUsers, parentHtmlHandler }) => {
     useEffect(() => {
-        parentHtmlHandler('Are you sure you want to delete this account?', 'confirm')
-    }, [parentHtmlHandler])
+        parentHtmlHandler({ title: 'Are you sure you want to delete this account?', containerClassName: 'confirm' })
+    }, [])
 
     return <div className="actions">
         <div id="form-actions">
