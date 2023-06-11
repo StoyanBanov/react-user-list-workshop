@@ -6,8 +6,8 @@ export async function getAllUsers(search, criteria) {
     return api.get(`${endpoint}?search=${search}&criteria=${criteria}`)
 }
 
-export async function getUsersPerPage(page, limit = 5, search, criteria) {
-    return api.get(`${endpoint}?page=${page}&limit=${limit}&search=${search}&criteria=${criteria}`)
+export async function getUsersPerPage(page, limit = 5, search, criteria, sort, order) {
+    return api.get(`${endpoint}?page=${page}&limit=${limit}&search=${search}&criteria=${criteria}&sort=${sort}&order=${order}`)
 }
 
 export async function getUserById(id) {

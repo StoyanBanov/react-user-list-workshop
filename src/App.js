@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Pagination } from './components/pagination/Pagination';
 import { Search } from './components/search/Search';
@@ -18,19 +18,22 @@ function App() {
     const [searchValue, setSearchValue] = useState('')
     const [searchCriteria, setSearchCriteria] = useState('')
 
+    const [sortCriteria, setSortCriteria] = useState('createdAt')
+    const [sortOrder, setSortOrder] = useState('desc')
+
     useEffect(() => {
-        getAllUsers(searchValue, searchCriteria)
+        getAllUsers(searchValue, searchCriteria, sortCriteria, sortOrder)
             .then(data => {
                 setPagesCount(Math.ceil(data.count / itemsPerPage))
             })
-    }, [itemsPerPage, users, searchValue, searchCriteria])
+    }, [itemsPerPage, users, searchValue, searchCriteria, sortCriteria, sortOrder])
 
     useEffect(() => {
-        getUsersPerPage(currentPage, itemsPerPage, searchValue, searchCriteria)
+        getUsersPerPage(currentPage, itemsPerPage, searchValue, searchCriteria, sortCriteria, sortOrder)
             .then(data => {
                 setUsers(data.users)
             })
-    }, [currentPage, itemsPerPage, searchValue, searchCriteria])
+    }, [currentPage, itemsPerPage, searchValue, searchCriteria, sortCriteria, sortOrder])
 
     function updateUsers(user, userId) {
         const currentUsers = [...users]
@@ -80,12 +83,12 @@ function App() {
 
             <main className="main">
                 <section className="card users-container">
-                    <Search setSearchValue={setSearchValue} setSearchCriteria={setSearchCriteria} />
+                    <Search setSearchValue={setSearchValue} setSearchCriteria={setSearchCriteria} setCurrentPage={setCurrentPage} />
 
                     {userOverlay && <UserOverlay {...userOverlay} />}
 
                     <div className="table-wrapper">
-                        <UserList users={users} handleUserBtn={handleUserBtn} />
+                        <UserList users={users} handleUserBtn={handleUserBtn} setSortCriteria={setSortCriteria} setSortOrder={setSortOrder} />
                     </div>
 
                     <button onClick={() => handleUserBtn('add')} className="btn-add btn">Add new user</button>

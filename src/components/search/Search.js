@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const Search = ({ setSearchValue, setSearchCriteria }) => {
+export const Search = ({ setSearchValue, setSearchCriteria, setCurrentPage }) => {
     const [search, setSearch] = useState('')
     const [criteria, setCriteria] = useState('')
 
@@ -12,6 +12,7 @@ export const Search = ({ setSearchValue, setSearchCriteria }) => {
         e.preventDefault()
         setSearchValue(search)
         setSearchCriteria(criteria)
+        setCurrentPage(1)
     }
 
     function onClearHandler(e) {
