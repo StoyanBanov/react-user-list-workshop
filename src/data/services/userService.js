@@ -2,12 +2,12 @@ import * as api from '../api'
 
 const endpoint = '/users'
 
-export async function getAllUsers() {
-    return api.get(endpoint)
+export async function getAllUsers(search, criteria) {
+    return api.get(`${endpoint}?search=${search}&criteria=${criteria}`)
 }
 
-export async function getUsersPerPage(page, limit = 5) {
-    return api.get(`${endpoint}?page=${page}&limit=${limit}`)
+export async function getUsersPerPage(page, limit = 5, search, criteria) {
+    return api.get(`${endpoint}?page=${page}&limit=${limit}&search=${search}&criteria=${criteria}`)
 }
 
 export async function getUserById(id) {

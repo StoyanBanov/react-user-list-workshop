@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 import { Pagination } from './components/pagination/Pagination';
 import { Search } from './components/search/Search';
@@ -15,19 +15,22 @@ function App() {
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(5)
 
+    const [searchValue, setSearchValue] = useState('')
+    const [searchCriteria, setSearchCriteria] = useState('')
+
     useEffect(() => {
-        getAllUsers()
+        getAllUsers(searchValue, searchCriteria)
             .then(data => {
                 setPagesCount(Math.ceil(data.count / itemsPerPage))
             })
-    }, [itemsPerPage, users])
+    }, [itemsPerPage, users, searchValue, searchCriteria])
 
     useEffect(() => {
-        getUsersPerPage(currentPage, itemsPerPage)
+        getUsersPerPage(currentPage, itemsPerPage, searchValue, searchCriteria)
             .then(data => {
                 setUsers(data.users)
             })
-    }, [currentPage, itemsPerPage])
+    }, [currentPage, itemsPerPage, searchValue, searchCriteria])
 
     function updateUsers(user, userId) {
         const currentUsers = [...users]
@@ -77,7 +80,7 @@ function App() {
 
             <main className="main">
                 <section className="card users-container">
-                    <Search />
+                    <Search setSearchValue={setSearchValue} setSearchCriteria={setSearchCriteria} />
 
                     {userOverlay && <UserOverlay {...userOverlay} />}
 
