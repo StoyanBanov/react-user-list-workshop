@@ -7,6 +7,7 @@ import { Search } from './components/search/Search';
 import { UserList } from './components/user-list/UserList';
 import { getAllUsers, getUserById, getUsersPerPage } from './data/services/userService';
 import { UserOverlay } from './components/user-overlay/UserOverlay';
+import { LoadingSpinner } from './components/loadingSpinner/LoadingSpinner';
 
 function App() {
     const [users, setUsers] = useState([])
@@ -21,17 +22,23 @@ function App() {
     const [sortCriteria, setSortCriteria] = useState('createdAt')
     const [sortOrder, setSortOrder] = useState('desc')
 
+    const [isTableLoading, setIsTableLoading] = useState(true)
+
     useEffect(() => {
+        setIsTableLoading(true)
         getAllUsers(searchValue, searchCriteria, sortCriteria, sortOrder)
             .then(data => {
                 setPagesCount(Math.ceil(data.count / itemsPerPage))
+                setIsTableLoading(false)
             })
     }, [itemsPerPage, users, searchValue, searchCriteria, sortCriteria, sortOrder])
 
     useEffect(() => {
+        setIsTableLoading(true)
         getUsersPerPage(currentPage, itemsPerPage, searchValue, searchCriteria, sortCriteria, sortOrder)
             .then(data => {
                 setUsers(data.users)
+                setIsTableLoading(false)
             })
     }, [currentPage, itemsPerPage, searchValue, searchCriteria, sortCriteria, sortOrder])
 
@@ -87,9 +94,11 @@ function App() {
 
                     {userOverlay && <UserOverlay {...userOverlay} />}
 
-                    <div className="table-wrapper">
-                        <UserList users={users} handleUserBtn={handleUserBtn} setSortCriteria={setSortCriteria} setSortOrder={setSortOrder} />
-                    </div>
+                    {isTableLoading
+                        ? <LoadingSpinner />
+                        : <div className="table-wrapper">
+                            <UserList users={users} handleUserBtn={handleUserBtn} setSortCriteria={setSortCriteria} setSortOrder={setSortOrder} />
+                        </div>}
 
                     <button onClick={() => handleUserBtn('add')} className="btn-add btn">Add new user</button>
 

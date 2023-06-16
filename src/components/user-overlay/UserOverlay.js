@@ -7,7 +7,7 @@ import { UserForm } from './UserForm'
 export const UserOverlay = ({ action, user, handleCloseOverlay, updateUsers }) => {
     const [htmlFromChild, setHtmlFromChild] = useState(null)
 
-    return <div div className="overlay">
+    return <div className="overlay">
         <div className="backdrop"></div>
         <div className="modal">
             <div className={`${htmlFromChild?.containerClassName}-container`}>
